@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>จัดการคำขอ - FindMyGroup</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-light bg-white px-4 shadow-sm mb-5">
+    <a class="navbar-brand fw-bold text-primary" href="/">FindMyGroup</a>
+    <div class="d-flex align-items-center">
+        <a href="/my-requests" class="btn btn-warning me-2 shadow-sm">🔔 คำขอ</a>
+        <a href="/my-groups" class="btn btn-info text-white me-3">📁 กลุ่มของฉัน</a>
+        <span class="text-muted me-2">|</span>
+        <img th:src="'https://ui-avatars.com/api/?name=' + ${#authentication.name} + '&background=random&rounded=true'" class="me-2" width="32" height="32">
+        <a href="/profile" class="fw-bold me-2 text-dark text-decoration-none">
+            <span th:text="${#authentication.name}">User</span>
+        </a>
+        <form th:action="@{/logout}" method="post" class="d-inline">
+            <button class="btn btn-outline-danger btn-sm" type="submit">Logout</button>
+        </form>
+    </div>
+</nav>
+
+<div class="container" style="max-width: 900px;">
+
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${successMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${errorMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-secondary">🔔 จัดการคำขอ & สมาชิก</h2>
+        <a href="/my-groups" class="btn btn-outline-secondary btn-sm">← กลับไปกลุ่มของฉัน</a>
+    </div>
+
+    <div class="card mb-5 card-request">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">📥 คำขอใหม่ (Pending Requests)</h5>
+            <span class="badge bg-white text-success" th:if="${!requests.empty}" th:text="${requests.size()} + ' คน'"></span>
+        </div>
+        <div class="card-body p-0"> <div th:if="${requests.empty}" class="text-center py-5 text-muted">
+            <p class="mb-0">🔕 ยังไม่มีคำขอใหม่ในขณะนี้</p>
+        </div>
+
+            <div class="table-responsive" th:if="${!requests.empty}">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">ผู้ขอเข้าร่วม</th>
+                        <th>ทักษะเด่น</th>
+                        <th>สถานะ</th>
+                        <th class="text-end pe-4">จัดการ</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="req : ${requests}">
+                        <td class="ps-4">
+                            <div class="d-flex align-items-center">
+                                <img th:src="'https://ui-avatars.com/api/?name=' + ${req.user.name} + '&background=random&rounded=true'" width="32" height="32" class="me-2 rounded-circle">
+                                <div>
+                                    <div class="fw-bold text-dark" th:text="${req.user.name}">Name</div>
+                                    <small class="text-muted" th:text="'@' + ${req.user.username}"></small>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="badge bg-light text-dark border fw-normal" th:text="${req.user.skills}">Skills</span></td>
+                        <td><span class="badge bg-warning">รออนุมัติ</span></td>
+                        <td class="text-end pe-4">
+                            <div class="d-flex gap-2 justify-content-end">
+                                <form th:action="@{/approve/{id}(id=${req.id})}" method="post">
+                                    <button class="btn btn-sm btn-success">อนุมัติ ✅</button>
+                                </form>
+                                <form th:action="@{/deny/{id}(id=${req.id})}" method="post" onsubmit="return confirm('ปฏิเสธคำขอนี้?');">
+                                    <button class="btn btn-sm btn-outline-danger">ปฏิเสธ ❌</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-5 shadow-sm" style="border: 1px solid #e2e8f0;">
+        <div class="card-header bg-white py-3 border-bottom">
+            <h5 class="mb-0 text-secondary">👥 สมาชิกในกลุ่ม (Current Members)</h5>
+        </div>
+        <div class="card-body p-0">
+
+            <div th:if="${members.empty}" class="text-center py-5 text-muted">
+                <p class="mb-0">ยังไม่มีสมาชิก (นอกจากคุณ)</p>
+            </div>
+
+            <div class="table-responsive" th:if="${!members.empty}">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">สมาชิก</th>
+                        <th>ทักษะ</th>
+                        <th>สถานะ</th>
+                        <th class="text-end pe-4">จัดการ</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="mem : ${members}">
+                        <td class="ps-4">
+                            <div class="d-flex align-items-center">
+                                <img th:src="'https://ui-avatars.com/api/?name=' + ${mem.user.name} + '&background=random&rounded=true'" width="32" height="32" class="me-2 rounded-circle">
+                                <div class="fw-bold text-dark" th:text="${mem.user.name}">Name</div>
+                            </div>
+                        </td>
+                        <td><span class="text-muted small" th:text="${mem.user.skills}">Skills</span></td>
+                        <td><span class="badge bg-success">Approved</span></td>
+                        <td class="text-end pe-4">
+                            <form th:action="@{/kick/{id}(id=${mem.id})}" method="post" onsubmit="return confirm('เชิญสมาชิกคนนี้ออก?');">
+                                <button class="btn btn-sm btn-outline-danger">เชิญออก 👢</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,244 @@
+/* 1. นำเข้าฟอนต์ Prompt */
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap');
+
+:root {
+    /* --- สีหลัก (Base Colors) --- */
+    --primary: #475569;       /* Slate 600 */
+    --primary-hover: #334155; /* Slate 700 */
+    --secondary: #94a3b8;     /* Slate 400 */
+
+    --bg-body: #f8fafc;       /* พื้นหลังเว็บ */
+    --bg-card: #ffffff;       /* พื้นหลังการ์ด */
+
+    --text-main: #1e293b;     /* สีตัวหนังสือหลัก */
+    --text-muted: #64748b;    /* สีตัวหนังสือรอง */
+
+    --border-radius: 8px;
+    --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+
+    --leader-bg: #84A98C;
+    --leader-border: #84A98C;
+
+    /* Member */
+    --member-bg: #8E9AAF;
+    --member-border: #8E9AAF;
+
+    /* Warning */
+    --warning-bg: #D97757;
+    --warning-border: #D97757;
+}
+
+/* --- Global Reset --- */
+body {
+    font-family: 'Prompt', sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-main);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+a {
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+/* --- Consistency: ปุ่ม (Button) --- */
+.btn {
+    border-radius: var(--border-radius) !important;
+    padding: 10px 24px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border: none;
+    transition: all 0.2s ease-in-out;
+    box-shadow: none !important;
+}
+
+.btn-primary {
+    background-color: var(--primary) !important;
+    color: white !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover) !important;
+    transform: translateY(-1px);
+}
+
+.btn-outline-secondary, .btn-secondary {
+    background-color: transparent !important;
+    border: 1px solid #cbd5e1 !important;
+    color: var(--text-main) !important;
+}
+
+.btn-outline-secondary:hover, .btn-secondary:hover {
+    background-color: #f1f5f9 !important;
+    border-color: #94a3b8 !important;
+}
+
+.btn-danger { background-color: #ef4444 !important; }
+.btn-success { background-color: #10b981 !important; }
+.btn-info { background-color: #3b82f6 !important; }
+
+.btn-warning {
+    background-color: var(--warning-bg) !important;
+    border-color: var(--warning-border) !important;
+    color: white !important;
+}
+
+.btn-warning:hover {
+    background-color: #C06346 !important; /* สีอิฐเข้มขึ้น */
+    color: white !important;
+}
+
+/* --- Consistency: การ์ดทั่วไป (Card) --- */
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid #e2e8f0;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-soft);
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-color: #cbd5e1;
+}
+
+.card-header {
+    background-color: white;
+    border-bottom: 1px solid #f1f5f9;
+    padding: 1.25rem 1.5rem;
+    font-weight: 600;
+    border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
+}
+
+.card-body { padding: 1.5rem; }
+
+.card-footer {
+    background-color: white;
+    border-top: 1px solid #f1f5f9;
+    padding: 1rem 1.5rem;
+    border-radius: 0 0 var(--border-radius) var(--border-radius) !important;
+}
+
+/* --- การ์ด Leader (หัวหน้า) --- */
+.card-leader {
+    border: 1px solid var(--leader-border) !important;
+    box-shadow: 0 4px 10px rgba(132, 169, 140, 0.2);
+}
+
+.card-leader .card-header {
+    background-color: var(--leader-bg) !important;
+    color: white !important;
+    border-bottom: none;
+}
+
+/* --- การ์ด Member (สมาชิก) --- */
+.card-member {
+    border: 1px solid var(--member-border) !important;
+    box-shadow: 0 4px 10px rgba(142, 154, 175, 0.2);
+}
+
+.card-member .card-header {
+    background-color: var(--member-bg) !important;
+    color: white !important;
+    border-bottom: none;
+}
+
+/* --- การ์ด Request (คำขอ) ใช้ธีมเดียวกับ Leader --- */
+.card-request {
+    border: 1px solid var(--leader-border);
+    box-shadow: 0 4px 10px rgba(132, 169, 140, 0.2);
+}
+
+.card-request .card-header {
+    background-color: var(--leader-bg);
+    color: white;
+    border-bottom: none;
+}
+
+/* --- Consistency: Form Input --- */
+.form-control, .form-select {
+    border-radius: var(--border-radius);
+    border: 1px solid #cbd5e1;
+    padding: 12px 16px;
+    background-color: #ffffff;
+    color: var(--text-main);
+    box-shadow: none !important;
+    transition: border-color 0.2s;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary);
+    background-color: #fff;
+}
+
+/* --- Navbar --- */
+.navbar {
+    background-color: white !important;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 1rem 2rem;
+    box-shadow: none !important;
+}
+
+.navbar-brand {
+    color: var(--primary) !important;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+}
+
+/* --- List Group --- */
+.list-group-item {
+    border: 1px solid #f1f5f9;
+    margin-bottom: 8px;
+    border-radius: var(--border-radius) !important;
+    transition: background-color 0.2s;
+}
+.list-group-item:hover { background-color: #f8fafc; }
+
+/* --- Badges & Custom Badges --- */
+.badge {
+    padding: 6px 10px;
+    font-weight: 500;
+    border-radius: 6px;
+    letter-spacing: 0.02em;
+}
+.bg-success { background-color: #10b981 !important; opacity: 0.9; }
+.bg-primary { background-color: var(--primary) !important; }
+.bg-secondary { background-color: #94a3b8 !important; }
+
+/* ป้ายสถานะรออนุมัติ (Pending) สีส้มอิฐจางๆ */
+.bg-warning {
+    background-color: #FDE8E4 !important;
+    color: #9C4221 !important;
+    border: 1px solid #F0C4B9;
+}
+
+/* ป้ายสีพิเศษสำหรับ Subject ในการ์ดกลุ่ม */
+.badge-soft-green {
+    background-color: #EDF7F0;
+    color: #486950;
+    border: 1px solid #CDE2D3;
+}
+.badge-soft-blue {
+    background-color: #F0F4F8;
+    color: #58687E;
+    border: 1px solid #D1D9E3;
+}
+
+/* --- Login/Search Box --- */
+.hero-box {
+    background: white;
+    padding: 3rem;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: var(--shadow-soft);
+}
+
+/* --- Avatar --- */
+.rounded-circle { border: 1px solid #e2e8f0; }

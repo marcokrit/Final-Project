@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>แก้ไขกลุ่ม - FindMyGroup</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-light bg-white px-4 shadow-sm mb-5">
+    <a class="navbar-brand fw-bold text-primary" href="/">FindMyGroup</a>
+    <div class="d-flex align-items-center">
+        <a href="/my-requests" class="btn btn-warning me-2">🔔 คำขอ</a>
+        <a href="/my-groups" class="btn btn-info text-white me-3">📁 กลุ่มของฉัน</a>
+        <span class="text-muted me-2">|</span>
+        <img th:src="'https://ui-avatars.com/api/?name=' + ${#authentication.name} + '&background=random&rounded=true'" class="me-2" width="32" height="32">
+        <a href="/profile" class="fw-bold me-2 text-dark text-decoration-none">
+            <span th:text="${#authentication.name}">User</span>
+        </a>
+        <form th:action="@{/logout}" method="post" class="d-inline">
+            <button class="btn btn-outline-danger btn-sm" type="submit">Logout</button>
+        </form>
+    </div>
+</nav>
+
+<div class="container" style="max-width: 600px;"> <div class="card card-leader shadow-sm mb-5">
+    <div class="card-header py-3 text-white">
+        <h5 class="mb-0 fw-bold">✏️ แก้ไขข้อมูลกลุ่ม</h5>
+    </div>
+
+    <div class="card-body p-4">
+        <form th:action="@{/edit-group/{id}(id=${group.id})}" th:object="${group}" method="post">
+
+            <div class="mb-3">
+                <label class="form-label text-muted small fw-bold">ชื่อโปรเจกต์</label>
+                <input type="text" th:field="*{projectName}" class="form-control" required>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label class="form-label text-muted small fw-bold">Section</label>
+                    <input type="text" th:field="*{section}" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label text-muted small fw-bold">รับสมาชิกสูงสุด (คน)</label>
+                    <input type="number" th:field="*{maxMembers}" class="form-control" required min="2">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-muted small fw-bold">รายละเอียด</label>
+                <textarea th:field="*{description}" class="form-control" rows="4" required></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label text-muted small fw-bold">ช่องทางติดต่อ</label>
+                <input type="text" th:field="*{contact}" class="form-control" placeholder="Line ID, Facebook, etc.">
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary shadow-sm">
+                    💾 บันทึกการแก้ไข
+                </button>
+                <a href="/my-groups" class="btn btn-outline-secondary">
+                    ยกเลิก
+                </a>
+            </div>
+        </form>
+
+        <hr class="my-4 opacity-25">
+
+        <div class="alert alert-danger border-0 bg-danger bg-opacity-10">
+            <h6 class="text-danger fw-bold mb-1">Danger Zone</h6>
+            <p class="small text-danger mb-3 opacity-75">
+                การลบกลุ่มจะไม่สามารถกู้คืนได้ และสมาชิกทั้งหมดจะถูกลบออกจากกลุ่ม
+            </p>
+            <form th:action="@{/delete-group/{id}(id=${group.id})}" method="post"
+                  onsubmit="return confirm('คุณแน่ใจไหมว่าจะลบกลุ่มนี้? (ไม่สามารถกู้คืนได้)');">
+                <button type="submit" class="btn btn-outline-danger w-100 btn-sm">
+                    🗑️ ลบกลุ่มนี้ถาวร
+                </button>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>
+
+</body>
+</html>
