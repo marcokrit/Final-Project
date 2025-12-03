@@ -66,8 +66,6 @@ spring.jpa.hibernate.ddl-auto=update
 
 ### 3. ขั้นตอนการรันโปรเจกต์ (Getting Started)
 
-### 3. ขั้นตอนการรันโปรเจกต์ (Getting Started)
-
 1. **Clone Repository:**
    ```bash
    git clone [YOUR_REPOSITORY_URL]
